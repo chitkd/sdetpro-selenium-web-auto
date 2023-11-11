@@ -8,7 +8,7 @@ import support.ui.SelectEx;
 
 public class IFrameInteraction {
     private static final String TARGET_URL = "https://the-internet.herokuapp.com/iframe";
-    private static final By IFRAME_SEL = By.cssSelector("frame[id^=\"mce\"]");
+    private static final By IFRAME_SEL = By.cssSelector("iframe[id^=\"mce\"]");
     private static WebDriver driver;
 
     public static void main(String[] args) {
