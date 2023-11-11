@@ -23,15 +23,15 @@ public class DropdownInteraction {
 
             // by visible text
             select.selectOption1();
-            debugWait();
+            Thread.sleep(1500);
 
             // by index
             select.selectByIndex(2);
-            debugWait();
+            Thread.sleep(1500);
 
             // by value
             select.selectByValue("1");
-            debugWait();
+            Thread.sleep(1500);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,11 +40,4 @@ public class DropdownInteraction {
         }
     }
 
-    private static void debugWait(){
-        try{
-            Thread.sleep(1500);
-        } catch(Exception ignored){
-
-        }
-    }
 }
