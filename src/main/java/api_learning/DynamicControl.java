@@ -41,9 +41,11 @@ public class DynamicControl {
 
             // Input form interaction
             WebElement enableTextFieldBtn = inputFormEle.findElement(BTN_ELE_SEL);
+            WebElement textFieldEle = inputFormEle.findElement(INPUT_ELE_SEL);
+            System.out.println("\n\nBEFORE | is element enabled: " + textFieldEle.isEnabled());
             enableTextFieldBtn.click();
             wait.until(new WaitForElementEnabled(INPUT_ELE_SEL));
-            WebElement textFieldEle = inputFormEle.findElement(INPUT_ELE_SEL);
+            System.out.println("AFTER | is element enabled: " + textFieldEle.isEnabled());
             textFieldEle.sendKeys("Something...");
 
             // DEBUG PURPOSE ONLY

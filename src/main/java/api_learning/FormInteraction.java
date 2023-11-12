@@ -15,8 +15,6 @@ public class FormInteraction {
     private static final String PASSWORD_STR = "SuperSecretPassword!";
 
     public static void main(String[] args) {
-
-        // Init Webdriver instance
         WebDriver driver = DriverFactory.getWebDriver();
 
         try{
