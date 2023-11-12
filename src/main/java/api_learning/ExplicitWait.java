@@ -39,7 +39,7 @@ public class ExplicitWait {
             try{
                 webDriverWait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("taolao")));
             } catch(TimeoutException timeoutException){
-                // Assert.faile('...')
+                // Assert.fail('...')
             }
              */
 
