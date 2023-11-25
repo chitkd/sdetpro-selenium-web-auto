@@ -39,6 +39,7 @@ public class JSAlert {
             handleAlert(driver, JS_ALERT_PROMPT_SEL, true, "Hello, Only check input text");
             System.out.println(resultEle.getText());
             Thread.sleep(2000);
+            driver.quit();
 
         } catch (Exception e) {
             e.printStackTrace();

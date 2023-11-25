@@ -5,22 +5,22 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
-public class WaitForElementEnabled implements ExpectedCondition<Boolean> {
-    private final By selector;
+public class WaitForElementEnabledEnhanced implements ExpectedCondition<Boolean> {
+    private final WebElement element;
 
-    public WaitForElementEnabled(By selector) {
-        this.selector = selector;
+    public WaitForElementEnabledEnhanced(WebElement element) {
+        this.element = element;
     }
 
     @Override
     public Boolean apply(WebDriver driver) {
-        return driver.findElement(selector).isEnabled();
+        return this.element.isEnabled();
     }
 
     @Override
     public String toString() {
         return "Element{" +
-                "Selector=" + selector +
+                "ELEMENT=" + element +
                 '}';
     }
 }
