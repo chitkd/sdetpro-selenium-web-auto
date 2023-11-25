@@ -3,10 +3,13 @@ package models.components;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.lang.reflect.Constructor;
 import java.time.Duration;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Component {
     protected WebDriver driver;
@@ -32,7 +35,34 @@ public class Component {
         return this.findComponents(componentClass).get(0);
     }
     public <T extends Component> List<T> findComponents(Class<T> componentClass){
-        return null;
+        By componentSelector;
+        try {
+            componentSelector = this.getComponentSelector(componentClass);
+        } catch (Exception e){
+            throw new IllegalArgumentException("[ERR] The component must have annotation for: CssSelector, ID... ");
+        }
+        List<WebElement> results = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(componentSelector));
+
+        // Define component's constructor
+        Class<?>[] params = new Class[]{WebDriver.class, WebElement.class};
+        Constructor<T> constructor;
+        try {
+            constructor = componentClass.getConstructor(params);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("[ERR] The component MUST have a constructor with params: " + Arrays.toString(params));
+        }
+
+        // Convert List<WebElement> into List<Component>
+        List<T> components = results.stream().map(webElement -> {
+            try {
+                return constructor.newInstance(driver, webElement);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }).collect(Collectors.toList());
+
+        return components;
     }
 
     private By getComponentSelector(Class<? extends Component> componentClass){
