@@ -4,14 +4,16 @@ import driver.DriverFactory;
 import models.pages.HomePage;
 import models.pages.LoginPageModel03;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
-public class POMModel04Tests {
-    public static void main(String[] args) {
-        WebDriver driver = DriverFactory.getWebDriver();
+public class POMModel04Tests extends BaseTest{
+    @Test
+    public void testPOMModel04 (){
+        driver.get("https://demowebshop.tricentis.com/");
         HomePage homePage = new HomePage(driver);
-
+        Assert.fail("I check the fail case");
         homePage.footerComp().doSomething();
-
     }
 
     /*
