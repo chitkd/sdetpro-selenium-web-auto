@@ -23,7 +23,7 @@ public class FooterTestFlow {
     }
 
     private void verifyInformationColumn(FooterColumnComponent informationColumnComp) {
-
+        testFooterColumn(informationColumnComp);
     }
 
     private void verifyCustomerServiceColumn() {
