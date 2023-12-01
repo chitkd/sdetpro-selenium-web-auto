@@ -13,7 +13,8 @@ public class POMModel04Tests extends BaseTest{
         driver.get("https://demowebshop.tricentis.com/");
         HomePage homePage = new HomePage(driver);
         Assert.fail("I check the fail case");
-        homePage.footerComp().doSomething();
+
+        //homePage.footerComp().doSomething();
     }
 
     /*

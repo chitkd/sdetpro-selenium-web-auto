@@ -1,0 +1,16 @@
+package tests.global.footer;
+
+import driver.DriverFactory;
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.Test;
+import test_flows.global.FooterTestFlow;
+import tests.BaseTest;
+
+public class FooterTest extends BaseTest {
+    @Test
+    public void testHomePageFooter(){
+        driver.get("https://demowebshop.tricentis.com/");
+        FooterTestFlow footerTestFlow = new FooterTestFlow(driver);
+        footerTestFlow.verifyFooterComponent();
+    }
+}

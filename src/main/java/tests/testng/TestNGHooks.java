@@ -1,4 +1,4 @@
-package tests;
+package tests.testng;
 
 import org.testng.annotations.*;
 
@@ -6,6 +6,7 @@ public class TestNGHooks {
     /**
      * BeforeSuite
      * BeforeTest
+     * BeforeClass
      * BeforeMethod
      */
 
@@ -26,7 +27,7 @@ public class TestNGHooks {
 
     @BeforeMethod
     public void beforeMethod(){
-        System.out.println("\t\t\tBefore medthod!");
+        System.out.println("\t\t\tBefore method!");
     }
 
     @Test
