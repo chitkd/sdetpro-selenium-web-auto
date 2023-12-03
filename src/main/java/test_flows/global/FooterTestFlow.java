@@ -49,7 +49,7 @@ public class FooterTestFlow {
 
         // Get sublist (if any) then click on a random sub-item / MainItem (if has no sublist)
 
-        /*
+
         List<SublistComponent> sublistComps = randomMainItemElem.sublistComps();
         if (sublistComps.isEmpty()){
             randomMainItemElem.catItemLinkElem().click();
@@ -59,7 +59,7 @@ public class FooterTestFlow {
             randomCatHref = randomCatItemComp.getComponent().getAttribute("href");
             randomCatItemComp.getComponent().click();
         }
-        */
+
 
 
         // Make sure we are on the right page | Wait until navigation is done
