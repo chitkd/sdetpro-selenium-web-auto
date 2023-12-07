@@ -4,12 +4,11 @@ import models.components.global.footer.*;
 import models.pages.BasePage;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import models.components.global.TopMenuComponent;
-import static models.components.global.TopMenuComponent.MainCatItem;
-import static models.components.global.TopMenuComponent.SublistComponent;
+import models.components.global.CatogeryItemComponent;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -39,32 +38,27 @@ public class FooterTestFlow {
     public void verifyProductCatFooterComponent() {
         // Randomly pickup MainItem from TopMenuComponent
         BasePage basePage = new BasePage(driver);
-        TopMenuComponent topMenuComponent = basePage.topMenuComp();
-        List<MainCatItem> mainCatsElem = topMenuComponent.mainItemsElem();
-
-        Assert.assertFalse(mainCatsElem.isEmpty(), "[ERR] There is no item on top menu");
-        MainCatItem randomMainItemElem = mainCatsElem.get(new SecureRandom().nextInt(mainCatsElem.size()));
-        String randomCatHref = randomMainItemElem.catItemLinkElem().getAttribute("href");
-        randomMainItemElem.catItemLinkElem().click();
+        List<CatogeryItemComponent> categoryItemComponents = basePage.categoryItemComponents();
+        Assert.assertFalse(categoryItemComponents.isEmpty(), "[ERR] There is no item on top menu");
+        int randomCategoryComponentIndex = new SecureRandom().nextInt(categoryItemComponents.size());
+        CatogeryItemComponent randomCategoryComponent = categoryItemComponents.get(randomCategoryComponentIndex);
+        String randomCatHref = randomCategoryComponent.catItemLink().getAttribute("href");
 
         // Get sublist (if any) then click on a random sub-item / MainItem (if has no sublist)
-
-
-        List<SublistComponent> sublistComps = randomMainItemElem.sublistComps();
-        if (sublistComps.isEmpty()){
-            randomMainItemElem.catItemLinkElem().click();
+        List<WebElement> sublistItems = randomCategoryComponent.sublistItems();
+        if (sublistItems.isEmpty()){
+            randomCategoryComponent.catItemLink().click();
         } else {
-            int randomIndex = new SecureRandom().nextInt(sublistComps.size());
-            SublistComponent randomCatItemComp = sublistComps.get(randomIndex);
-            randomCatHref = randomCatItemComp.getComponent().getAttribute("href");
-            randomCatItemComp.getComponent().click();
+            int randomSubItemIndex = new SecureRandom().nextInt(sublistItems.size());
+            WebElement randomSubItem = sublistItems.get(randomSubItemIndex);
+            randomCatHref = randomSubItem.getAttribute("href");
+            randomSubItem.click();
         }
-
 
 
         // Make sure we are on the right page | Wait until navigation is done
         try{
-            WebDriverWait wait = randomMainItemElem.componentWait();
+            WebDriverWait wait = randomCategoryComponent.componentWait();
             wait.until(ExpectedConditions.urlContains(randomCatHref));
         } catch(TimeoutException ignored){
             Assert.fail("[ERR] Target page is not matched");
