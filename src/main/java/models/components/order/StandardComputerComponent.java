@@ -1,5 +1,6 @@
 package models.components.order;
 
+import models.components.ComponentCSSSelector;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,6 +9,7 @@ import support.ui.SelectEx;
 
 import java.util.List;
 
+@ComponentCSSSelector(".product-essential")
 public class StandardComputerComponent extends ComputerEssentialComponent{
     private static final By productAttributeSel = By.cssSelector("select[name^='product_attribute']");
     public StandardComputerComponent(WebDriver driver, WebElement component) {

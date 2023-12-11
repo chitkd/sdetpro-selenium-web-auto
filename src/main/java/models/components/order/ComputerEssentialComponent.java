@@ -42,8 +42,9 @@ public abstract class ComputerEssentialComponent extends BaseItemComponent {
         List<WebElement> optionEl = component.findElements(optionSelector);
         // If we don't find that element we throw an exception to tell that the option value is not existing on the page
         if (optionEl.isEmpty()){
-            throw new RuntimeException("[ERR] The option " + type + "is not existing to select!");
+            throw new RuntimeException("[ERR] The option " + type + " is not existing to select!");
         }
+        optionEl.get(0).click();
         return optionEl.get(0).getText().trim();
     }
 }
