@@ -1,0 +1,16 @@
+[
+  {
+    "processor": "2.5GHz",
+    "ram": "8GB",
+    "hdd": "320 GB",
+    "os": "Windows 10",
+    "software": "Total Commander"
+  },
+  {
+    "processor": "2.2GHz",
+    "ram": "4GB",
+    "hdd": "400 GB",
+    "os": "Ubuntu",
+    "software": "Acrobat Reader"
+  }
+]

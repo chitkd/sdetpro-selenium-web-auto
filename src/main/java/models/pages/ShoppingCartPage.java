@@ -11,7 +11,7 @@ public class ShoppingCartPage extends BasePage {
         super(driver);
     }
 
-    List<CartItemRowComponent> cartItemRowComponentList() {
+    public List<CartItemRowComponent> cartItemRowComps() {
         return findComponents(CartItemRowComponent.class);
     }
 

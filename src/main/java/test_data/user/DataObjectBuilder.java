@@ -1,4 +1,4 @@
-package test_data;
+package test_data.user;
 
 import com.google.gson.Gson;
 

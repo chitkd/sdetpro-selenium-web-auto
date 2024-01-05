@@ -1,10 +1,8 @@
 package models.components;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import support.ui.ExpectedConditionEx;
 
@@ -44,11 +42,6 @@ public class Component {
 
     public List<WebElement> findElements(By by){
         return this.component.findElements(by);
-    }
-
-    public void scrollToTopPage(){
-        JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
-        javascriptExecutor.executeScript("window.scrollTo(document.body.scrollHeight, 0);");
     }
 
     public <T extends Component> T findComponent(Class<T> componentClass){
