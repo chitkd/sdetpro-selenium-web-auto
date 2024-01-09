@@ -3,6 +3,9 @@ package test_flows.computer;
 import models.components.cart.CartItemRowComponent;
 import models.components.cart.TotalComponent;
 import models.components.checkout.BillingAddressComponent;
+import models.components.checkout.PaymentInformationComponent;
+import models.components.checkout.PaymentMethodComponent;
+import models.components.checkout.ShippingMethodComponent;
 import models.components.order.ComputerEssentialComponent;
 import models.pages.CheckoutOptionPage;
 import models.pages.CheckoutPage;
@@ -10,12 +13,14 @@ import models.pages.ComputerItemDetailsPage;
 import models.pages.ShoppingCartPage;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import test_data.CreditCardType;
+import test_data.PaymentMethod;
 import test_data.computer.ComputerData;
 import test_data.user.DataObjectBuilder;
 import test_data.user.UserDataObject;
 
-import java.util.List;
-import java.util.Map;
+import java.security.SecureRandom;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,6 +34,8 @@ public class OrderComputerFlow<T extends ComputerEssentialComponent> {
 
     private int quantity;
     private UserDataObject defaultCheckoutUser;
+    private PaymentMethod paymentMethod;
+    private CreditCardType creditCardType;
 
     public OrderComputerFlow(WebDriver driver, Class<T> computerEssentialCompClass, ComputerData computerData) {
         this.computerEssentialCompClass = computerEssentialCompClass;
@@ -158,4 +165,85 @@ public class OrderComputerFlow<T extends ComputerEssentialComponent> {
         return price;
     }
 
+    public void inputShippingAddress() {
+        new CheckoutPage(driver).shippingAddressComp().clickOnContinueBtn();
+    }
+
+    public void selectShippingMethod() {
+        List<String> shippingMethods = Arrays.asList("Ground", "Next Day Air", "2nd Day Air");
+        int randomShippingMethodIndex = new SecureRandom().nextInt(shippingMethods.size());
+        String randomShippingMethod = shippingMethods.get(randomShippingMethodIndex);
+
+        CheckoutPage checkoutPage = new CheckoutPage(driver);
+        ShippingMethodComponent shippingMethodComp = checkoutPage.shippingMethodComp();
+        shippingMethodComp.selectShippingMethod(randomShippingMethod);
+        shippingMethodComp.clickOnContinueBtn();
+    }
+
+    public void selectPaymentMethod(){
+        this.paymentMethod = PaymentMethod.COD;
+        CheckoutPage checkoutPage = new CheckoutPage(driver);
+        PaymentMethodComponent paymentMethodComp = checkoutPage.paymentMethodComp();
+        paymentMethodComp.selectCODMethod();
+    }
+    public void selectPaymentMethod(PaymentMethod paymentMethod) {
+        Assert.assertNotNull(paymentMethod, "[ERR] Payment method type can't be null");
+        this.paymentMethod = paymentMethod;
+        CheckoutPage checkoutPage = new CheckoutPage(driver);
+        PaymentMethodComponent paymentMethodComp = checkoutPage.paymentMethodComp();
+        switch (paymentMethod){
+            case CHECK_MONEY_ORDER:
+                paymentMethodComp.selectCheckMoneyOrder();
+                break;
+            case CREDIT_CARD:
+                paymentMethodComp.selectCreditCard();
+                break;
+            case PURCHASE_ORDER:
+                paymentMethodComp.selectPurchaseOrder();
+                break;
+            default:
+                paymentMethodComp.selectCODMethod();
+        }
+        paymentMethodComp.clickOnContinueBtn();
+
+        /*
+        /*
+         * https://www.paypalobjects.com/en_AU/vhelp/paypalmanager_help/credit_card_numbers.htm
+         * OR here(using generate feature): https://developer.paypal.com/api/rest/sandbox/card-testing/#link-creditcardgenerator
+         */
+
+    }
+
+    public void inputPaymentInfo(CreditCardType creditCardType) {
+        this.creditCardType = creditCardType;
+        CheckoutPage checkoutPage = new CheckoutPage(driver);
+        PaymentInformationComponent paymentInformationComp = checkoutPage.paymentInformationComp();
+        if (this.paymentMethod.equals(PaymentMethod.PURCHASE_ORDER)){
+            paymentInformationComp.inputPurchaseNumber("123");
+        } else if (this.paymentMethod.equals(PaymentMethod.CREDIT_CARD)) {
+            paymentInformationComp.selectCardType(creditCardType);
+            String cardHolderFirstName = this.defaultCheckoutUser.getFirstName();
+            String cardHolderLastName = this.defaultCheckoutUser.getLastName();
+            paymentInformationComp.inputCardHolderName(cardHolderFirstName + "" + cardHolderLastName);
+
+            // Trigger the logic for other card types as well like Amex, Master card...
+            String cardNumber = creditCardType.equals(CreditCardType.VISA) ? "4032038252650779" : "5110922954626181";
+            paymentInformationComp.inputCardNumber(cardNumber);
+
+            // Current month and next year
+            Calendar calendar = new GregorianCalendar();
+            paymentInformationComp.selectExpiredMonth(String.valueOf(calendar.get(Calendar.MONTH) + 1));
+            paymentInformationComp.selectExpiredYear(String.valueOf(calendar.get(Calendar.YEAR) + 1));
+            paymentInformationComp.inputCardCode("123");
+            paymentInformationComp.clickOnContinueBtn();
+        } else if (this.paymentMethod.equals(PaymentMethod.COD)) {
+            // Verify the text is [You will pay by COD]
+        } else {
+            // Verify the text is [Mail Personal or Business Check, Cashier's Check or money order to:...]
+        }
+    }
+    // TODO: if you have time please add verification methods for this
+    public void confirmOrder(){
+        new CheckoutPage(driver).confirmOrderComp().clickOnConfirmBtn();
+    }
 }

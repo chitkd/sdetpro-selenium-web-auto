@@ -21,7 +21,7 @@ public class BillingAddressComponent extends Component {
     private static final By add1Sel = By.id("BillingNewAddress_Address1");
     private static final By zipCodeSel = By.id("BillingNewAddress_ZipPostalCode");
     private static final By phoneNoSel = By.id("BillingNewAddress_PhoneNumber");
-    private static final By continueBtnSel = By.id("billing-buttons-container");
+    private static final By continueBtnSel = By.cssSelector("input[class*='new-address-next-step-button']");
     public BillingAddressComponent(WebDriver driver, WebElement component) {
         super(driver, component);
     }
