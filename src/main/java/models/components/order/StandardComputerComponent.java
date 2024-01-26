@@ -1,5 +1,6 @@
 package models.components.order;
 
+import io.qameta.allure.Step;
 import models.components.ComponentCSSSelector;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -16,6 +17,7 @@ public class StandardComputerComponent extends ComputerEssentialComponent{
         super(driver, component);
     }
 
+    @Step("Select processor type: {type}")
     @Override
     public String selectProcessorType(String type) {
         final int PROCESS_DROPDOWN_INDEX = 0;
@@ -23,6 +25,7 @@ public class StandardComputerComponent extends ComputerEssentialComponent{
         return selectOption(processorDropdownEle, type);
     }
 
+    @Step("Select RAM type: {type}")
     @Override
     public String selectRAMType(String type) {
         final int RAM_DROPDOWN_INDEX = 1;
@@ -34,10 +37,6 @@ public class StandardComputerComponent extends ComputerEssentialComponent{
         SelectEx select = new SelectEx(dropdownEle);
         List<WebElement> allOptionEles = select.getOptions();
         String fullStrOption = null;
-
-        // Logic
-
-        // If null -> Exception
 
         for (WebElement optionEle : allOptionEles) {
             String currentOptionText = optionEle.getText();
@@ -51,7 +50,6 @@ public class StandardComputerComponent extends ComputerEssentialComponent{
         if (fullStrOption == null){
             throw new RuntimeException("[ERR] The option " + type + "is not existing to select");
         }
-
 
         select.selectByVisibleText(fullStrOption);
         return fullStrOption;

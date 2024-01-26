@@ -1,9 +1,18 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 
 <suite name="Regression" verbose="1" >
+
     <test name="Footer">
         <classes>
             <class name="tests.global.footer.FooterTest"/>
+        </classes>
+    </test>
+
+
+    <test name="Computer order">
+        <classes>
+            <class name="tests.order.computer.BuyingCheapComputerTest"/>
+            <class name="tests.order.computer.BuyingStandardComputerTest"/>
         </classes>
     </test>
 </suite>

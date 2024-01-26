@@ -1,5 +1,6 @@
 package models.components.order;
 
+import io.qameta.allure.Step;
 import models.components.ComponentCSSSelector;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,11 +11,13 @@ public class CheapComputerComponent extends ComputerEssentialComponent{
         super(driver, component);
     }
 
+    @Step("Select processor type: {type}")
     @Override
     public String selectProcessorType(String type) {
         return selectCompOption(type);
     }
 
+    @Step("Select RAM type: {type}")
     @Override
     public String selectRAMType(String type) {
         return selectCompOption(type);

@@ -232,6 +232,8 @@ public class OrderComputerFlow<T extends ComputerEssentialComponent> {
 
             // Current month and next year
             Calendar calendar = new GregorianCalendar();
+            //int expiredMonthNum = calendar.get(Calendar.MONTH) + 1;
+            //String expiredMonthStr = expiredMonthNum < 10 ? "0" + expiredMonthNum : String.valueOf(expiredMonthNum);
             paymentInformationComp.selectExpiredMonth(String.valueOf(calendar.get(Calendar.MONTH) + 1));
             paymentInformationComp.selectExpiredYear(String.valueOf(calendar.get(Calendar.YEAR) + 1));
             paymentInformationComp.inputCardCode("123");

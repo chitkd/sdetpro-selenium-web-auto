@@ -1,5 +1,6 @@
 package models.components.order;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,19 +15,20 @@ public abstract class ComputerEssentialComponent extends BaseItemComponent {
     }
     public abstract String selectProcessorType(String type);
     public abstract String selectRAMType(String type);
-
+    @Step("Select HDD type: {type}")
     public String selectHDD(String type){
         return selectCompOption(type);
     }
-
+    @Step("Select OS: {type}")
     public String selectOS(String type){
         return selectCompOption(type);
     }
-
+    @Step("Select software: {type}")
     public String selectSoftware(String type){
         return selectCompOption(type);
     }
 
+    @Step("Unselecting all default options")
     public void unselectDefaultOption(){
         // lambda expression
         component.findElements(allOptionSel).forEach(option -> {
@@ -36,6 +38,7 @@ public abstract class ComputerEssentialComponent extends BaseItemComponent {
         });
     }
 
+    @Step("Select option with value: {type}")
     protected String selectCompOption(String type){
         String selectorStr = "//label[contains(text(),'" + type + "')]";
         By optionSelector = By.xpath(selectorStr);
