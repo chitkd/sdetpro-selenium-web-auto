@@ -9,6 +9,7 @@ import tests.BaseTest;
 public class FooterTest extends BaseTest {
     @Test
     public void testHomePageFooter(){
+        WebDriver driver = getDriver();
         driver.get("https://demowebshop.tricentis.com/");
         FooterTestFlow footerTestFlow = new FooterTestFlow(driver);
         footerTestFlow.verifyFooterComponent();
@@ -16,6 +17,7 @@ public class FooterTest extends BaseTest {
 
     @Test
     public void testCategoryPageFooter(){
+        WebDriver driver = getDriver();
         driver.get("https://demowebshop.tricentis.com/");
         FooterTestFlow footerTestFlow = new FooterTestFlow(driver);
         footerTestFlow.verifyProductCatFooterComponent();

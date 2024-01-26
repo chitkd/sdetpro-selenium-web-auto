@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 public class POMModel04Tests extends BaseTest{
     @Test
     public void testPOMModel04 (){
+        WebDriver driver = getDriver();
         driver.get("https://demowebshop.tricentis.com/");
         HomePage homePage = new HomePage(driver);
         Assert.fail("I check the fail case");

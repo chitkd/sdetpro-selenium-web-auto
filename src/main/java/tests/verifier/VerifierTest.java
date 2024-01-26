@@ -1,5 +1,6 @@
 package tests.verifier;
 
+import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -8,6 +9,7 @@ import tests.BaseTest;
 public class VerifierTest extends BaseTest {
     @Test
     public void testHardAssertion() {
+        WebDriver driver = getDriver();
         driver.get("https://demowebshop.tricentis.com/");
 
         // Hard Assertion

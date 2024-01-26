@@ -7,6 +7,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import java.time.Duration;
 
 public class DriverFactory {
+    private WebDriver driver;
     public static WebDriver getWebDriver(){
         ChromeOptions chromeOptions = new ChromeOptions();
         // This is a good workaround to not enable password manager popup from chrome
@@ -19,5 +20,20 @@ public class DriverFactory {
          */
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15L));
         return driver;
+    }
+
+    public WebDriver getDriver(){
+        if (driver == null){
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.addArguments("--incognito");
+            this.driver = new ChromeDriver(chromeOptions);
+        }
+        return this.driver;
+    }
+
+    public void closeBrowserSession(){
+        if (driver != null){
+            driver.quit();
+        }
     }
 }

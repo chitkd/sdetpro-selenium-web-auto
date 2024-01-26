@@ -1,6 +1,7 @@
 package tests.order.computer;
 
 import models.components.order.StandardComputerComponent;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import test_data.CreditCardType;
@@ -13,6 +14,7 @@ import tests.BaseTest;
 public class BuyingStandardComputerTest extends BaseTest {
     @Test (dataProvider = "computerData")
     public void testStandardComputerBuying(ComputerData computerData){
+        WebDriver driver = getDriver();;
         driver.get("https://demowebshop.tricentis.com/build-your-own-computer");
         OrderComputerFlow<StandardComputerComponent> orderComputerFlow = new OrderComputerFlow<>(driver, StandardComputerComponent.class, computerData);
         orderComputerFlow.buildCompSpec();

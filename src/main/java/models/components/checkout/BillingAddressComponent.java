@@ -69,6 +69,7 @@ public class BillingAddressComponent extends Component {
 
     public void clickOnContinueBtn(){
         findElement(continueBtnSel).click();
+        wait.until(ExpectedConditions.invisibilityOf(findElement(continueBtnSel)));
     }
 
 }
