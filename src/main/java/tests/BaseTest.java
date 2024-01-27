@@ -10,6 +10,7 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
 
 import java.io.File;
 import java.io.InputStream;
@@ -21,12 +22,15 @@ import java.util.*;
 public class BaseTest {
     private final static List<DriverFactory> webdriverThreadPool = Collections.synchronizedList(new ArrayList<>());
     private static ThreadLocal<DriverFactory> driverThread;
+    private String browser;
     protected WebDriver getDriver(){
-        return driverThread.get().getDriver();
+        return driverThread.get().getDriver(this.browser);
     }
 
-    @BeforeTest
-    protected void initBrowserSession() {
+    @BeforeTest(description = "Init browser session")
+    @Parameters({"browser"})
+    protected void initBrowserSession(String browser) {
+        this.browser = browser;
         driverThread = ThreadLocal.withInitial(() -> {
             DriverFactory threadDriverFactory = new DriverFactory();
             webdriverThreadPool.add(threadDriverFactory);
@@ -63,7 +67,7 @@ public class BaseTest {
         String filename = methodName + "-" + year + "-" + month + "-" + day + "-" + hour + "-" + minute + "-" + second + ".png";
 
         // 3. Take screenshot
-        WebDriver driver = driverThread.get().getDriver();
+        WebDriver driver = driverThread.get().getDriver(this.browser);
         File screenshotBase64Data = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 
         try {
